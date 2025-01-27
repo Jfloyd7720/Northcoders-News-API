@@ -37,3 +37,13 @@ describe("GET /api/topics", () => {
       });
   });
 });
+describe("GET invalid endpoint", () => {
+  test("404: Responds with error message for invalid endpoint", () => {
+    return request(app)
+      .get("/api/topic")
+      .expect(404)
+      .then((res) => {
+        expect(res.body).toEqual({ error: "endpoint not fpund" });
+      });
+  });
+});
