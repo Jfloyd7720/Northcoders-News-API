@@ -7,4 +7,8 @@ app.get("/api", getApiInfo);
 
 app.get("/api/topics", getTopicsData);
 
+app.all("*", (req, res) => {
+  res.status(404).send({ error: "endpoint not fpund" });
+});
+
 module.exports = app;
