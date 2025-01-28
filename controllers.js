@@ -1,8 +1,12 @@
-const { fetchData, fetchArticlesDataById } = require("./models");
+const {
+  fetchTopicsData,
+  fetchArticlesDataById,
+  fetchArticleData,
+} = require("./models");
 const endpoints = require("./endpoints.json");
 
 const getTopicsData = (req, res) => {
-  fetchData().then((data) => {
+  fetchTopicsData().then((data) => {
     return res.status(200).send(data);
   });
 };
@@ -18,5 +22,15 @@ const getArticlesByID = (req, res) => {
     }
   });
 };
+const getArticleData = (req, res) => {
+  fetchArticleData().then((data) => {
+    return res.status(200).send(data);
+  });
+};
 
-module.exports = { getApiInfo, getTopicsData, getArticlesByID };
+module.exports = {
+  getApiInfo,
+  getTopicsData,
+  getArticlesByID,
+  getArticleData,
+};
