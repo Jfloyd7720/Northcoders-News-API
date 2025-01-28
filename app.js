@@ -1,10 +1,17 @@
 const express = require("express");
 const app = express();
-const { getApiInfo, getTopicsData, getArticlesByID } = require("./controllers");
+const {
+  getApiInfo,
+  getTopicsData,
+  getArticlesByID,
+  getArticleData,
+} = require("./controllers");
 
 app.get("/api", getApiInfo);
 
 app.get("/api/topics", getTopicsData);
+
+app.get("/api/articles", getArticleData);
 
 app.get("/api/articles/:article_id", getArticlesByID);
 
