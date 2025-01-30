@@ -60,7 +60,6 @@ articles.article_img_url
 ORDER BY articles.created_at DESC`
     )
     .then((res) => {
-      console.log(res.rows);
       return res.rows;
     });
 };
@@ -76,10 +75,25 @@ const fetchArticlesDataById = (article) => {
   });
 };
 
+const updateArticleByArticleID = (inc_votes, article_id) => {
+  return db
+    .query(
+      "UPDATE articles SET votes = votes+$1 WHERE article_id =$2 RETURNING *",
+      [inc_votes, article_id]
+    )
+    .then((res) => {
+      return res.rows;
+    })
+    .catch((err) => {
+      return err;
+    });
+};
+
 module.exports = {
   fetchTopicsData,
   fetchArticlesDataById,
   fetchArticleData,
   fetchCommentsData,
   insertCommentsData,
+  updateArticleByArticleID,
 };
