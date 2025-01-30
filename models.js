@@ -1,4 +1,5 @@
 const db = require("./db/connection");
+const format = require("pg-format");
 
 const fetchTopicsData = () => {
   return db.query("SELECT * FROM topics").then((res) => {
@@ -18,6 +19,21 @@ const fetchCommentsData = (article) => {
       else {
         return null;
       }
+    });
+};
+
+const insertCommentsData = (values) => {
+  return db
+    .query(
+      "INSERT INTO comments(author,body,article_id) VALUES ($1, $2, $3) RETURNING *",
+      values
+    )
+
+    .then((res) => {
+      return res.rows;
+    })
+    .catch((err) => {
+      return err;
     });
 };
 
@@ -65,4 +81,5 @@ module.exports = {
   fetchArticlesDataById,
   fetchArticleData,
   fetchCommentsData,
+  insertCommentsData,
 };
