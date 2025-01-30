@@ -313,5 +313,33 @@ describe("GET /api", () => {
       });
   });
 });
+describe("PATCH /api/articles/:article_id", () => {
+  test("200: Responds with object with updated votes count", () => {
+    const comment = { inc_votes: 13 };
+    return request(app)
+      .patch("/api/articles/1")
+      .send(comment)
+      .expect(200)
+      .then((res) => {
+        expect(res.body[0]).toHaveProperty("article_id");
+        expect(res.body[0]).toHaveProperty("title");
+        expect(res.body[0]).toHaveProperty("topic");
+        expect(res.body[0]).toHaveProperty("author");
+        expect(res.body[0]).toHaveProperty("body");
+        expect(res.body[0]).toHaveProperty("article_img_url");
+        expect(res.body[0].votes).toEqual(113);
+      });
+  });
+  test("404: responds with article_id does not exist", () => {
+    const comment = { inc_votes: 13 };
+    return request(app)
+      .patch("/api/articles/7688")
+      .send(comment)
+      .expect(404)
+      .then((res) => {
+        expect(res.body).toEqual({ message: "article_id does not exist" });
+      });
+  });
+});
 
 // invailid article_id type - 400

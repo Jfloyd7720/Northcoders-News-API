@@ -4,6 +4,7 @@ const {
   fetchArticleData,
   fetchCommentsData,
   insertCommentsData,
+  updateArticleByArticleID,
 } = require("./models");
 const endpoints = require("./endpoints.json");
 
@@ -58,6 +59,18 @@ const postCommentsDataByArticleID = (req, res) => {
     }
   });
 };
+const patchArticleByArticleID = (req, res) => {
+  const inc_votes = req.body.inc_votes;
+  const article_id = req.params.article_id;
+
+  updateArticleByArticleID(inc_votes, article_id).then((data) => {
+    if (data.length < 1) {
+      return res.status(404).send({ message: "article_id does not exist" });
+    } else {
+      return res.status(200).send(data);
+    }
+  });
+};
 
 module.exports = {
   getApiInfo,
@@ -66,4 +79,5 @@ module.exports = {
   getArticleData,
   getCommentsDataByArticleID,
   postCommentsDataByArticleID,
+  patchArticleByArticleID,
 };
