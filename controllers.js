@@ -3,6 +3,7 @@ const {
   fetchArticlesDataById,
   fetchArticleData,
   fetchCommentsData,
+  insertCommentsData,
 } = require("./models");
 const endpoints = require("./endpoints.json");
 
@@ -42,6 +43,21 @@ const getCommentsDataByArticleID = (req, res) => {
     }
   });
 };
+const postCommentsDataByArticleID = (req, res) => {
+  const values = [];
+  for (let key in req.body) {
+    values.push(req.body[key]);
+  }
+  const article = Number(req.url.split("/")[3]);
+  values.push(article);
+  insertCommentsData(values).then((data) => {
+    if (data.code == "23503") {
+      return res.status(400).send({ message: "article_id does not exist" });
+    } else {
+      return res.status(200).send(data);
+    }
+  });
+};
 
 module.exports = {
   getApiInfo,
@@ -49,4 +65,5 @@ module.exports = {
   getArticlesByID,
   getArticleData,
   getCommentsDataByArticleID,
+  postCommentsDataByArticleID,
 };
