@@ -236,7 +236,7 @@ describe("GET article by id endpoint", () => {
       });
   });
 });
-describe.only("GET /api/articles/1/comments endpoint", () => {
+describe("GET /api/articles/1/comments endpoint", () => {
   test("Check returns array of expected length", () => {
     return request(app)
       .get("/api/articles/1/comments")
@@ -275,6 +275,39 @@ describe.only("GET /api/articles/1/comments endpoint", () => {
     return request(app)
       .get("/api/articles/9789/comments")
       .expect(404)
+      .then((res) => {
+        expect(res.body).toEqual({ message: "article_id does not exist" });
+      });
+  });
+});
+describe.only("GET /api", () => {
+  test("200: Responds with an object detailing the documentation for each endpoint", () => {
+    const comment = { author: "rogersop", body: "random message" };
+    return request(app)
+      .post("/api/articles/1/comments")
+      .send(comment)
+      .expect(200)
+      .then((res) => {
+        expect(res.body).toEqual([
+          {
+            comment_id: 19,
+            body: "random message",
+            article_id: 1,
+            author: "rogersop",
+            votes: 0,
+            created_at: expect.any(String),
+          },
+        ]);
+      });
+  });
+});
+describe.only("GET /api", () => {
+  test("200: Responds with an object detailing the documentation for each endpoint", () => {
+    const comment = { author: "rogersop", body: "random message" };
+    return request(app)
+      .post("/api/articles/897987/comments")
+      .send(comment)
+      .expect(400)
       .then((res) => {
         expect(res.body).toEqual({ message: "article_id does not exist" });
       });
