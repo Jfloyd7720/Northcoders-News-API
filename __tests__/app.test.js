@@ -175,6 +175,9 @@ describe("GET /api/articles", () => {
       .expect(200)
       .then((res) => {
         expect(res.body).toEqual(expectedResult);
+        // use foreach to loop through array and check eachh has correct keys
+        // check that each object has the properties of the correct data types we're expecting - typeo/.objectcontaining
+        //  use jest sorted to check order
       });
   });
 });
@@ -221,7 +224,7 @@ describe("GET article by id endpoint", () => {
       .get("/api/articles/1")
       .expect(200)
       .then((res) => {
-        expect(res.body).toEqual(expectedResponse);
+        expect(res.body.data).toEqual(expectedResponse);
       });
   });
   test("returns 404 when article_id does not exist", async () => {
@@ -233,3 +236,49 @@ describe("GET article by id endpoint", () => {
       });
   });
 });
+describe.only("GET /api/articles/1/comments endpoint", () => {
+  test("Check returns array of expected length", () => {
+    return request(app)
+      .get("/api/articles/1/comments")
+      .expect(200)
+      .then((res) => {
+        expect(res.body.length).toEqual(11);
+      });
+  });
+  test("Check returns array with each object containg expected properties", () => {
+    return request(app)
+      .get("/api/articles/1/comments")
+      .expect(200)
+      .then((res) => {
+        res.body.forEach((comment) => {
+          expect(comment).toHaveProperty("article_id");
+          expect(comment).toHaveProperty("author");
+          expect(comment).toHaveProperty("body");
+          expect(comment).toHaveProperty("comment_id");
+          expect(comment).toHaveProperty("created_at");
+          expect(comment).toHaveProperty("votes");
+          expect(Object.keys(comment).length).toEqual(6);
+        });
+      });
+  });
+  test("Check returns array with each object containg no extra properties", () => {
+    return request(app)
+      .get("/api/articles/1/comments")
+      .expect(200)
+      .then((res) => {
+        res.body.forEach((comment) => {
+          expect(Object.keys(comment).length).toEqual(6);
+        });
+      });
+  });
+  test("returns 404 when article_id does not exist", () => {
+    return request(app)
+      .get("/api/articles/9789/comments")
+      .expect(404)
+      .then((res) => {
+        expect(res.body).toEqual({ message: "article_id does not exist" });
+      });
+  });
+});
+
+// invailid article_id type - 400
