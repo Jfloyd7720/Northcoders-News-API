@@ -6,6 +6,21 @@ const fetchTopicsData = () => {
   });
 };
 
+const fetchCommentsData = (article) => {
+  return db
+    .query(
+      "SELECT * FROM comments WHERE article_id = $1 ORDER BY created_at DESC",
+      [article]
+    )
+    .then((res) => {
+      if (res.rows.length > 0) return res.rows;
+      //  promise.reject
+      else {
+        return null;
+      }
+    });
+};
+
 const fetchArticleData = () => {
   return db
     .query(
@@ -34,10 +49,11 @@ ORDER BY articles.created_at DESC`
     });
 };
 
-const fetchArticlesDataById = (param) => {
+const fetchArticlesDataById = (article) => {
   const query = `SELECT * FROM articles WHERE article_id = $1 `;
-  return db.query(query, [param.article_id]).then((res) => {
+  return db.query(query, [article.article_id]).then((res) => {
     if (res.rows.length > 0) return res.rows;
+    //  promise.reject
     else {
       return null;
     }
@@ -48,4 +64,5 @@ module.exports = {
   fetchTopicsData,
   fetchArticlesDataById,
   fetchArticleData,
+  fetchCommentsData,
 };
