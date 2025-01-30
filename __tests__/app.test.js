@@ -280,7 +280,7 @@ describe("GET /api/articles/1/comments endpoint", () => {
       });
   });
 });
-describe.only("GET /api", () => {
+describe("GET /api", () => {
   test("200: Responds with an object detailing the documentation for each endpoint", () => {
     const comment = { author: "rogersop", body: "random message" };
     return request(app)
@@ -301,7 +301,7 @@ describe.only("GET /api", () => {
       });
   });
 });
-describe.only("GET /api", () => {
+describe("GET /api", () => {
   test("200: Responds with an object detailing the documentation for each endpoint", () => {
     const comment = { author: "rogersop", body: "random message" };
     return request(app)
