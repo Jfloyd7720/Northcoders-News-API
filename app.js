@@ -6,7 +6,10 @@ const {
   getArticlesByID,
   getArticleData,
   getCommentsDataByArticleID,
+  postCommentsDataByArticleID,
 } = require("./controllers");
+
+app.use(express.json());
 
 app.get("/api", getApiInfo);
 
@@ -17,6 +20,8 @@ app.get("/api/articles", getArticleData);
 app.get("/api/articles/:article_id", getArticlesByID);
 
 app.get("/api/articles/:article_id/comments", getCommentsDataByArticleID);
+
+app.post("/api/articles/:article_id/comments", postCommentsDataByArticleID);
 
 app.all("*", (req, res) => {
   res.status(404).send({ error: "endpoint not fpund" });
