@@ -341,5 +341,28 @@ describe("PATCH /api/articles/:article_id", () => {
       });
   });
 });
+describe("DELETE /api/comments/:comment_id", () => {
+  test("204: Responds with no content when the comment is deleted", () => {
+    return request(app).delete("/api/comments/1").expect(204);
+  });
+  test("404: responds with comment_id does not exist", () => {
+    return request(app)
+      .delete("/api/comments/897")
+      .expect(404)
+      .then((res) => {
+        expect(res.body).toEqual({ message: "comment_id does not exist" });
+      });
+  });
+  test("400: responds with comment_id does not exist", () => {
+    return request(app)
+      .delete("/api/comments/kjh")
+      .expect(404)
+      .then((res) => {
+        expect(res.body).toEqual({
+          message: "invalid data type for comment_id",
+        });
+      });
+  });
+});
 
 // invailid article_id type - 400
