@@ -37,7 +37,7 @@ const insertCommentsData = (values) => {
     });
 };
 
-const fetchArticleData = () => {
+const fetchArticleData = (sort = "articles.created_at", order = "DESC") => {
   return db
     .query(
       `SELECT 
@@ -57,7 +57,7 @@ articles.topic,
 articles.created_at, 
 articles.votes, 
 articles.article_img_url
-ORDER BY articles.created_at DESC`
+ORDER BY ${sort} ${order}`
     )
     .then((res) => {
       return res.rows;
