@@ -9,6 +9,7 @@ const {
   postCommentsDataByArticleID,
   patchArticleByArticleID,
   deleteCommentsByCommentID,
+  getUsers,
 } = require("./controllers");
 
 app.use(express.json());
@@ -29,8 +30,10 @@ app.patch("/api/articles/:article_id", patchArticleByArticleID);
 
 app.delete("/api/comments/:comment_id", deleteCommentsByCommentID);
 
+app.get("/api/users", getUsers);
+
 app.all("*", (req, res) => {
-  res.status(404).send({ error: "endpoint not fpund" });
+  res.status(404).send({ error: "endpoint not found" });
 });
 
 module.exports = app;

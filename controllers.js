@@ -6,6 +6,7 @@ const {
   insertCommentsData,
   updateArticleByArticleID,
   removeCommentById,
+  fetchUsers,
 } = require("./models");
 const endpoints = require("./endpoints.json");
 
@@ -86,6 +87,11 @@ const deleteCommentsByCommentID = (req, res) => {
     }
   });
 };
+const getUsers = (req, res) => {
+  fetchUsers().then((data) => {
+    return res.status(200).send(data.rows);
+  });
+};
 
 module.exports = {
   getApiInfo,
@@ -96,4 +102,5 @@ module.exports = {
   postCommentsDataByArticleID,
   patchArticleByArticleID,
   deleteCommentsByCommentID,
+  getUsers,
 };
