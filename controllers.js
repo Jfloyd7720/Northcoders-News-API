@@ -31,7 +31,9 @@ const getArticlesByID = (req, res) => {
   });
 };
 const getArticleData = (req, res) => {
-  fetchArticleData().then((data) => {
+  queries = Object.values(req.query);
+
+  fetchArticleData(...queries).then((data) => {
     return res.status(200).send(data);
   });
 };
