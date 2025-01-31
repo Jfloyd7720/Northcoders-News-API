@@ -201,7 +201,7 @@ describe("GET invalid endpoint", () => {
       .get("/api/topic")
       .expect(404)
       .then((res) => {
-        expect(res.body).toEqual({ error: "endpoint not fpund" });
+        expect(res.body).toEqual({ error: "endpoint not found" });
       });
   });
 });
@@ -361,6 +361,32 @@ describe("DELETE /api/comments/:comment_id", () => {
         expect(res.body).toEqual({
           message: "invalid data type for comment_id",
         });
+      });
+  });
+});
+
+describe("GET /api/users", () => {
+  test("200: Responds with an array of all users, each containing username, name, and avatar_url", () => {
+    return request(app)
+      .get("/api/users")
+      .expect(200)
+      .then((res) => {
+        res.body.forEach((user) => {
+          expect(user).toHaveProperty("username");
+          expect(user).toHaveProperty("name");
+          expect(user).toHaveProperty("avatar_url");
+          expect(typeof user.username).toBe("string");
+          expect(typeof user.name).toBe("string");
+          expect(typeof user.avatar_url).toBe("string");
+        });
+      });
+  });
+  test("404: Responds with error message for invalid endpoint", () => {
+    return request(app)
+      .get("/api/user")
+      .expect(404)
+      .then((res) => {
+        expect(res.body).toEqual({ error: "endpoint not found" });
       });
   });
 });
