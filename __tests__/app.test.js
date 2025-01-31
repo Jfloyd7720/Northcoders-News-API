@@ -698,5 +698,6 @@ describe("GET /api/articles with sort query", () => {
       });
   });
   // remove above test and use jest-sort
+  //add testing for an invalid query
 });
 // invailid article_id type - 400
