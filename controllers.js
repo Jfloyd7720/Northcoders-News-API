@@ -5,6 +5,7 @@ const {
   fetchCommentsData,
   insertCommentsData,
   updateArticleByArticleID,
+  removeCommentById,
 } = require("./models");
 const endpoints = require("./endpoints.json");
 
@@ -71,6 +72,20 @@ const patchArticleByArticleID = (req, res) => {
     }
   });
 };
+const deleteCommentsByCommentID = (req, res) => {
+  const id = req.params.comment_id;
+  removeCommentById(id).then((data) => {
+    if (data.rowCount < 1) {
+      return res.status(404).send({ message: "comment_id does not exist" });
+    } else if (data.code == "22P02") {
+      return res
+        .status(404)
+        .send({ message: "invalid data type for comment_id" });
+    } else {
+      return res.status(204).send();
+    }
+  });
+};
 
 module.exports = {
   getApiInfo,
@@ -80,4 +95,5 @@ module.exports = {
   getCommentsDataByArticleID,
   postCommentsDataByArticleID,
   patchArticleByArticleID,
+  deleteCommentsByCommentID,
 };
