@@ -2,16 +2,19 @@
 
 To vuew live project visit this link - https://northcoders-news-api-4aqk.onrender.com/
 
-Description
+Description:
+
 Northcoders News API allows users to interact with articles comments and topics. THis API is part of a fullstack project where users can post articles, comment on them, and vote on them.
 
-Summary
+Summary:
+
 Topics: View a list of available topics.
 Articles: Fetch, filter, sort, and update articles.
 Comments: Add, update, and delete comments for articles.
 Users: View a list of users.
 
-Setup Instructions
+Setup Instructions:
+
 Node.js - v14.0.0 or higher.
 PostgreSQL - v12.0.0 or higher.
 To set up and run this project locally, follow these steps:
