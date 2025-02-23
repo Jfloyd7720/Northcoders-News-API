@@ -32,8 +32,7 @@ Ensure that PostgreSQL is installed on your machine and that you have the necess
 
 Step-by-Step Guide to Run the Project Locally
 
-Clone the Repository
-
+Clone the Repository:  
 git clone https://github.com/Jfloyd7720/Northcoders-News-API.git
 
 Install Dependencies
